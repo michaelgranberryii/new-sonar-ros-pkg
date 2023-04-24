@@ -1,0 +1,19 @@
+<launch>
+	<node pkg="sonar_package" type="sonar_pub70.py" name="sonar0x70_publisher_node" />
+	<node pkg="sonar_package" type="sonar_pub72.py" name="sonar0x71_publisher_node" />
+	<node pkg="sonar_package" type="sonar_pub74.py" name="sonar0x72_publisher_node" />
+	<!-- <node pkg="sonar_package" type="sonar_algo_sub.py" name="sonar_listener_algo" /> -->
+	<node pkg="sonar_package" type="sonar_sub.py" name="sonar_listener" />
+
+  <arg name="config" default="$(find create_bringup)/config/default.yaml" />
+  <arg name="desc" default="true" />
+
+  <node name="create_driver" pkg="create_driver" type="create_driver" output="screen">
+    <rosparam command="load" file="$(arg config)" />
+    <param name="robot_model" value="CREATE_2" />
+  </node>
+
+  <!-- Robot description -->
+  <include if="$(arg desc)" file="$(find create_description)/launch/create_2.launch" />
+  
+</launch>
